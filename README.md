@@ -14,7 +14,7 @@ This repository showcases how **WordSDK** — a native JVM library powered by We
 ## What is WordSDK?
 WordSDK demonstrates a new approach to bridging ecosystems:
 - Compile existing C/C++ libraries to WASM
-- Translate WASM into JVM classes using Chicory
+- Translate WASM into JVM classes using [Chicory](https://github.com/dylibso/chicory)
 - Expose the result as a pure Java library
 **Result**: a sandboxed, portable, and enterprise‑ready JVM artifact that leverages decades of C/C++ engineering while fitting naturally into Java workflows.
 
