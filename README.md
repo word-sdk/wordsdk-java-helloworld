@@ -14,8 +14,8 @@ This repository showcases how **WordSDK** — a native JVM library powered by We
 ## What is WordSDK?
 WordSDK demonstrates a new approach to bridging ecosystems:
 - Compile existing C/C++ libraries to WASM
-- Translate WASM into JVM classes using [Chicory](https://github.com/dylibso/chicory)
-- Expose the result as a pure Java library
+- Translate WASM into JVM classes using [Chicory](https://github.com/dylibso/chicory) or natively execute WASM via [Wasmtime](https://wasmtime.dev/)
+- Expose the result as a pure Java library (com.wordsdk:chicory) or as a Wasmtime package (com.wordsdk:wasmtime)
 **Result**: a sandboxed, portable, and enterprise‑ready JVM artifact that leverages decades of C/C++ engineering while fitting naturally into Java workflows.
 
 
@@ -23,7 +23,10 @@ WordSDK demonstrates a new approach to bridging ecosystems:
 WordSDK can be used as a **standalone converter** to transform Microsoft Word documents (`.docx` or legacy `.doc`) directly into PDF files — without relying on external DLLs or native dependencies. 
 Perfect for enterprise environments where portability, sandboxing, and consistency are critical.
 ```java
-WordSDK.Worker api=WordSDK.createWorker(options);
+WasmInstanceFactory factory=new com.wordsdk.WasmTimeInstanceFactory(); // based on Wasmtime; compatible with Java 1.8+
+// Alternative: Chicory backend - Pure Java implementation (no native dependencies), requires Java 9+
+// WasmInstanceFactory factory = new com.wordsdk.DylibsoChicoryInstanceFactory();
+WordSDK.Worker api=WordSDK.createWorker(factory, options);
 api.importFile(Paths.get("HelloWorld.docx"));
 api.exportPDF(Paths.get("HelloWorld.pdf"));
 ```
@@ -33,7 +36,7 @@ A working example is in [HelloWordSDK.java](src/main/java/com/wordsdk/HelloWordS
 ## Integration with DOCX4J
 WordSDK integrates seamlessly with [Docx4J](https://www.docx4java.org/), enabling developers to **leverage existing document‑processing solutions** while adding robust PDF export capabilities. By combining Docx4J’s powerful Word document manipulation features with WordSDK’s conversion engine, you can build end‑to‑end Java workflows that edit, transform, and render Word files directly to PDF — **all within the JVM sandbox**.
 ```java
-WordSDK.Worker api=WordSDK.createWorker(options);        
+WordSDK.Worker api=WordSDK.createWorker(factory, options);        
 // Create an import stream for feeding into WordSDK
 OutputStream importStream=api.createImportStream();  
 // feed the DOCX4J document into WordSDK
@@ -75,9 +78,23 @@ Reference WordSDK in your `pom.xml`:
 <dependency>
   <groupId>com.wordsdk</groupId>
   <artifactId>wordsdk</artifactId>
-  <version>0.9.1</version>
+  <version>1.0.1</version>
 </dependency>
 ```
+and for the Wasmtime backend
+```xml
+<dependency>
+  <groupId>com.wordsdk</groupId>
+  <artifactId>wasmtime</artifactId>
+  <version>1.0.1</version>
+</dependency>
+or for the Chircory backend
+<dependency>
+   <groupId>com.wordsdk</groupId>
+   <artifactId>chicory</artifactId>
+   <version>1.0.1</version>
+</dependency>
+
 
 
 ## Running the Demo

@@ -1,19 +1,17 @@
-package com.wordsdk;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Constructor;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -21,16 +19,44 @@ import org.junit.jupiter.api.io.TempDir;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wordsdk.WordSDK;
+import com.wordsdk.WordSDK.WasmInstanceFactory;
+
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
-import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.docx4j.Docx4J;
 
-import org.apache.pdfbox.io.RandomAccessReadBuffer;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
 public class HelloWordSDK_Tests {
+    final WasmInstanceFactory factory;
+
     final Logger logger=LoggerFactory.getLogger(HelloWordSDK_Tests.class);
+
+    public HelloWordSDK_Tests() {
+        WasmInstanceFactory _factory=null;
+        try {
+            //for debug:
+            //_factory=new com.wordsdk.WasmTimeInstanceFactory();
+            //_factory=new com.wordsdk.DylibsoChicoryInstanceFactory();
+            if (null==_factory) {
+                String factoryClassName = System.getProperty("com.wordsdk.wasm.instance.factory");            
+                System.out.println("factoryClassName="+factoryClassName);
+                if (null!=factoryClassName) {
+                    Class<?> factoryClass = Class.forName(factoryClassName);
+                    Constructor<?> factoryConstructor=factoryClass.getDeclaredConstructor();
+                    _factory=(WasmInstanceFactory)factoryConstructor.newInstance();
+                }
+            }
+        } catch(Exception e) {
+            throw new RuntimeException("Please set \"com.wordsdk.wasm.instance.factory\" system property", e);
+        }
+        if (null!=_factory) {
+            factory=_factory;
+        } else {
+            throw new RuntimeException("Please set \"com.wordsdk.wasm.instance.factory\" system property");
+        }
+    }
 
     /**
      * Utility method to copy all bytes from an InputStream to an OutputStream.
@@ -64,7 +90,7 @@ public class HelloWordSDK_Tests {
             options.logger=logger;
 
             // Create a worker instance with the configured options
-            WordSDK.Worker api=WordSDK.createWorker(options);
+            WordSDK.Worker api=WordSDK.createWorker(factory, options);
 
             // Log the test execution with the resource path
             logger.info("API Test: "+resourcePath);
@@ -97,7 +123,7 @@ public class HelloWordSDK_Tests {
             options.logger=logger;
 
             // Create a worker instance with the configured options
-            WordSDK.Worker api=WordSDK.createWorker(options);        
+            WordSDK.Worker api=WordSDK.createWorker(factory, options);        
             assertNotNull(api, "Worker instance should be created successfully");
 
             // Create an import stream for feeding the Word document into the SDK
@@ -156,7 +182,7 @@ public class HelloWordSDK_Tests {
             options.logger=logger;
 
             // Create a worker instance with the configured options
-            WordSDK.Worker api=WordSDK.createWorker(options);        
+            WordSDK.Worker api=WordSDK.createWorker(factory, options);        
             assertNotNull(api, "Worker instance should be created successfully");
 
             // Create an import stream for feeding the modified Word document into the SDK
