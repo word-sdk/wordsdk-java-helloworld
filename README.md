@@ -78,7 +78,7 @@ Reference WordSDK in your `pom.xml`:
 <dependency>
   <groupId>com.wordsdk</groupId>
   <artifactId>wordsdk</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
 </dependency>
 ```
 and for the Wasmtime backend
@@ -86,13 +86,13 @@ and for the Wasmtime backend
 <dependency>
   <groupId>com.wordsdk</groupId>
   <artifactId>wasmtime</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
 </dependency>
 or for the Chircory backend
 <dependency>
    <groupId>com.wordsdk</groupId>
    <artifactId>chicory</artifactId>
-   <version>1.0.1</version>
+   <version>1.0.2</version>
 </dependency>
 
 
