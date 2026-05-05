@@ -14,17 +14,17 @@
       <dependency>
         <groupId>com.wordsdk</groupId>
         <artifactId>wordsdk</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.3</version>
       </dependency>
       <dependency>
         <groupId>com.wordsdk</groupId>
         <artifactId>wasmtime</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.3</version>
       </dependency>
       <dependency>
         <groupId>com.wordsdk</groupId>
         <artifactId>chicory</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.3</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
