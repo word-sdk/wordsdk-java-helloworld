@@ -49,6 +49,58 @@ final byte[] pdf=api.exportPDF();
 A working example is in the Unit Test [HelloWordSDK_Tests.DOCX4J](/src/test/java/HelloWordSDK_Tests.java#L142)
 
 
+## CLI
+
+If you just need a CLI to convert a document to PDF we provide a ready‑to‑run JAR.
+
+1. Download the [jar](https://repo1.maven.org/maven2/com/wordsdk/wasmtime/1.0.5/wasmtime-1.0.5-cli.jar) from the Maven repo:
+   ```bash
+   curl -O https://repo1.maven.org/maven2/com/wordsdk/wasmtime/1.0.5/wasmtime-1.0.5-cli.jar
+   ```
+2. Then execute it via `-jar`:
+   ```bash
+   java -jar wasmtime-1.0.5-cli.jar
+   ```
+   ```
+   Missing required option: '--import=<input>'
+   Usage: wordsdk [-htvV] [--production-mode] [--use-system-fonts] [-vv]
+                  [--export-pdf=<exportPdf>] [--fonts-dir=<fontsDir>]
+                  --import=<input> [--license=<license>]
+                  [--pdf-creator=<pdfCreator>] [--pdf-producer=<pdfProducer>]
+   Import Word documents and export to other formats, like PDF.
+         --export-pdf=<exportPdf>
+                               Export as PDF
+         --fonts-dir=<fontsDir>
+                               Fonts dir
+     -h, --help                Show this help message and exit.
+         --import=<input>      Input Word document
+         --license=<license>   License File
+         --pdf-creator=<pdfCreator>
+                               PDF Creator
+         --pdf-producer=<pdfProducer>
+                               PDF Producer
+         --production-mode     Production Mode
+     -t, --time                Enable timing
+         --use-system-fonts    Use system fonts
+     -v, --verbose             Enable verbose logging
+     -V, --version             Print version information and exit.
+         -vv, --debug          Enable debug logging
+   ```
+3. To convert a document use e.g.
+   ```bash
+   java -jar wasmtime-1.0.5-cli.jar --import=test.docx --export-pdf=out.pdf
+   ```
+
+If you want to use the **Chicory backend**, download [chicory-1.0.5-cli.jar](https://repo1.maven.org/maven2/com/wordsdk/chicory/1.0.5/chicory-1.0.5-cli.jar) from the Maven repo:
+```bash
+curl -O https://repo1.maven.org/maven2/com/wordsdk/chicory/1.0.5/chicory-1.0.5-cli.jar
+```
+And then use it via:
+```bash
+java -jar chicory-1.0.5-cli.jar --import=test.docx --export-pdf=out.pdf
+```
+
+
 ## Configuration
 
 The `WordSDK.createWorker(options)` method accepts an `Options` object to customize the SDK's behavior. Here are some of the available options:
