@@ -34,13 +34,15 @@ public class HelloWordSDK {
             options.verbose=0;  // Verbose logging for debugging (not recommended in production)
             options.logger=logger; // Attach the logger for capturing SDK logs
             options.productionMode=false; // // Set to true to enable production mode (disables dev/debug features)
+            options.pdfCreator="My PdfCreator";
+            options.pdfProducer="My PdfProducer";
 
             // Initialize the WebAssembly runtime factory
             // Wasmtime backend: High performance, requires native libraries, Java 8+            
-            WasmInstanceFactory factory=new com.wordsdk.WasmTimeInstanceFactory(); // based on Wasmtime; compatible with Java 1.8+
+            WasmInstanceFactory factory=new com.wordsdk.wasmtime.WasmTimeInstanceFactory(); // based on Wasmtime; compatible with Java 1.8+
 
             // Alternative: Chicory backend - Pure Java implementation (no native dependencies), requires Java 9+
-            // WasmInstanceFactory factory = new com.wordsdk.DylibsoChicoryInstanceFactory();
+            // WasmInstanceFactory factory = new com.wordsdk.chicory.DylibsoChicoryInstanceFactory();
 
             // Create the WordSDK worker with the selected factory
             WordSDK.Worker api=WordSDK.createWorker(factory, options);

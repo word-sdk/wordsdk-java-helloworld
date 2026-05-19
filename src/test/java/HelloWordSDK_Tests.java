@@ -37,8 +37,8 @@ public class HelloWordSDK_Tests {
         WasmInstanceFactory _factory=null;
         try {
             //for debug:
-            //_factory=new com.wordsdk.WasmTimeInstanceFactory();
-            //_factory=new com.wordsdk.DylibsoChicoryInstanceFactory();
+            //_factory=new com.wordsdk.wasmtime.WasmTimeInstanceFactory();
+            //_factory=new com.wordsdk.chicory.DylibsoChicoryInstanceFactory();
             if (null==_factory) {
                 String factoryClassName = System.getProperty("com.wordsdk.wasm.instance.factory");            
                 System.out.println("factoryClassName="+factoryClassName);

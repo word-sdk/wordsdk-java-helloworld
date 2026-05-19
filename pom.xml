@@ -14,17 +14,17 @@
       <dependency>
         <groupId>com.wordsdk</groupId>
         <artifactId>wordsdk</artifactId>
-        <version>1.0.4</version>
+        <version>1.0.5</version>
       </dependency>
       <dependency>
         <groupId>com.wordsdk</groupId>
         <artifactId>wasmtime</artifactId>
-        <version>1.0.4</version>
+        <version>1.0.5</version>
       </dependency>
       <dependency>
         <groupId>com.wordsdk</groupId>
         <artifactId>chicory</artifactId>
-        <version>1.0.4</version>
+        <version>1.0.5</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
@@ -117,7 +117,7 @@
                 </goals>
                 <configuration>
                     <systemPropertyVariables>
-                        <com.wordsdk.wasm.instance.factory>com.wordsdk.WasmTimeInstanceFactory</com.wordsdk.wasm.instance.factory>
+                        <com.wordsdk.wasm.instance.factory>com.wordsdk.wasmtime.WasmTimeInstanceFactory</com.wordsdk.wasm.instance.factory>
                     </systemPropertyVariables>
                 </configuration>
             </execution>
@@ -130,7 +130,7 @@
                 </goals>
                 <configuration>
                     <systemPropertyVariables>
-                        <com.wordsdk.wasm.instance.factory>com.wordsdk.DylibsoChicoryInstanceFactory</com.wordsdk.wasm.instance.factory>
+                        <com.wordsdk.wasm.instance.factory>com.wordsdk.chicory.DylibsoChicoryInstanceFactory</com.wordsdk.wasm.instance.factory>
                     </systemPropertyVariables>
                 </configuration>
             </execution>

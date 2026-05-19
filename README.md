@@ -23,9 +23,9 @@ WordSDK demonstrates a new approach to bridging ecosystems:
 WordSDK can be used as a **standalone converter** to transform Microsoft Word documents (`.docx` or legacy `.doc`) directly into PDF files — without relying on external DLLs or native dependencies. 
 Perfect for enterprise environments where portability, sandboxing, and consistency are critical.
 ```java
-WasmInstanceFactory factory=new com.wordsdk.WasmTimeInstanceFactory(); // based on Wasmtime; compatible with Java 1.8+
+WasmInstanceFactory factory=new com.wordsdk.wasmtime.WasmTimeInstanceFactory(); // based on Wasmtime; compatible with Java 1.8+
 // Alternative: Chicory backend - Pure Java implementation (no native dependencies), requires Java 9+
-// WasmInstanceFactory factory = new com.wordsdk.DylibsoChicoryInstanceFactory();
+// WasmInstanceFactory factory = new com.wordsdk.chicory.DylibsoChicoryInstanceFactory();
 WordSDK.Worker api=WordSDK.createWorker(factory, options);
 api.importFile(Paths.get("HelloWorld.docx"));
 api.exportPDF(Paths.get("HelloWorld.pdf"));
@@ -71,6 +71,30 @@ WordSDK.Worker api=WordSDK.createWorker(options);
 ```
 
 
+## What's new in 1.0.5
+
+- **Better macOS font support** — improved discovery and rendering of system fonts on macOS for more faithful document conversion.
+- **PDF metadata configuration** — new `pdfCreator` and `pdfProducer` options on `WordSDK.Options` let you customize the `Creator` and `Producer` fields written into the exported PDF's metadata.
+
+
+## <a id="incompatible_change"></a>Incompatible change: 1.0.4 → 1.0.5
+
+To silence the following warning on Java 24+:
+```
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::loadLibrary has been called by
+io.github.kawamuray.wasmtime.NativeLibraryLoader in an unnamed module
+```
+we split the SDK into proper Java modules. This required moving two classes into dedicated packages:
+
+| Before (1.0.4) | After (1.0.5) |
+| --- | --- |
+| `com.wordsdk.WasmTimeInstanceFactory` | `com.wordsdk.wasmtime.WasmTimeInstanceFactory` |
+| `com.wordsdk.DylibsoChicoryInstanceFactory` | `com.wordsdk.chicory.DylibsoChicoryInstanceFactory` |
+
+**Action required:** update the imports in your code before upgrading. No other API changes were made.
+
+
 ## Prerequisites
 
 Reference WordSDK in your `pom.xml`:
@@ -78,7 +102,7 @@ Reference WordSDK in your `pom.xml`:
 <dependency>
   <groupId>com.wordsdk</groupId>
   <artifactId>wordsdk</artifactId>
-  <version>1.0.4</version>
+  <version>1.0.5</version>
 </dependency>
 ```
 and for the Wasmtime backend
@@ -86,13 +110,13 @@ and for the Wasmtime backend
 <dependency>
   <groupId>com.wordsdk</groupId>
   <artifactId>wasmtime</artifactId>
-  <version>1.0.4</version>
+  <version>1.0.5</version>
 </dependency>
 or for the Chircory backend
 <dependency>
    <groupId>com.wordsdk</groupId>
    <artifactId>chicory</artifactId>
-   <version>1.0.4</version>
+   <version>1.0.5</version>
 </dependency>
 
 
