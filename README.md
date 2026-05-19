@@ -170,7 +170,7 @@ or for the Chircory backend
    <artifactId>chicory</artifactId>
    <version>1.0.5</version>
 </dependency>
-
+```
 
 
 ## Running the Demo
