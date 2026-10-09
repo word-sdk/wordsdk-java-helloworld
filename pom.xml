@@ -10,21 +10,27 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+  <repositories>
+    <repository>
+      <id>wordsdk</id>
+      <url>https://downloads.wordsdk.com</url>
+    </repository>
+  </repositories>  
   <dependencies>
       <dependency>
         <groupId>com.wordsdk</groupId>
         <artifactId>wordsdk</artifactId>
-        <version>1.0.5</version>
+        <version>1.0.9</version>
       </dependency>
       <dependency>
         <groupId>com.wordsdk</groupId>
         <artifactId>wasmtime</artifactId>
-        <version>1.0.5</version>
+        <version>1.0.9</version>
       </dependency>
       <dependency>
         <groupId>com.wordsdk</groupId>
         <artifactId>chicory</artifactId>
-        <version>1.0.5</version>
+        <version>1.0.9</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
