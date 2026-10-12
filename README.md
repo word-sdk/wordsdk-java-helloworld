@@ -53,13 +53,13 @@ A working example is in the Unit Test [HelloWordSDK_Tests.DOCX4J](/src/test/java
 
 If you just need a CLI to convert a document to PDF we provide a ready‑to‑run JAR.
 
-1. Download the [jar](https://repo1.maven.org/maven2/com/wordsdk/wasmtime/1.0.5/wasmtime-1.0.5-cli.jar) from the Maven repo:
+1. Download the [jar](https://downloads.wordsdk.com/com/wordsdk/wasmtime/1.0.9/wasmtime-1.0.9-cli.jar) from the Maven repo:
    ```bash
-   curl -O https://repo1.maven.org/maven2/com/wordsdk/wasmtime/1.0.5/wasmtime-1.0.5-cli.jar
+   curl -O https://downloads.wordsdk.com/com/wordsdk/wasmtime/1.0.9/wasmtime-1.0.9-cli.jar
    ```
 2. Then execute it via `-jar`:
    ```bash
-   java -jar wasmtime-1.0.5-cli.jar
+   java -jar wasmtime-1.0.9-cli.jar
    ```
    ```
    Missing required option: '--import=<input>'
@@ -88,16 +88,16 @@ If you just need a CLI to convert a document to PDF we provide a ready‑to‑ru
    ```
 3. To convert a document use e.g.
    ```bash
-   java -jar wasmtime-1.0.5-cli.jar --import=test.docx --export-pdf=out.pdf
+   java -jar wasmtime-1.0.9-cli.jar --import=test.docx --export-pdf=out.pdf
    ```
 
-If you want to use the **Chicory backend**, download [chicory-1.0.5-cli.jar](https://repo1.maven.org/maven2/com/wordsdk/chicory/1.0.5/chicory-1.0.5-cli.jar) from the Maven repo:
+If you want to use the **Chicory backend**, download [chicory-1.0.9-cli.jar](https://downloads.wordsdk.com/com/wordsdk/chicory/1.0.9/chicory-1.0.9-cli.jar) from the Maven repo:
 ```bash
-curl -O https://repo1.maven.org/maven2/com/wordsdk/chicory/1.0.5/chicory-1.0.5-cli.jar
+curl -O https://downloads.wordsdk.com/com/wordsdk/chicory/1.0.9/chicory-1.0.9-cli.jar
 ```
 And then use it via:
 ```bash
-java -jar chicory-1.0.5-cli.jar --import=test.docx --export-pdf=out.pdf
+java -jar chicory-1.0.9-cli.jar --import=test.docx --export-pdf=out.pdf
 ```
 
 
@@ -128,6 +128,9 @@ WordSDK.Worker api=WordSDK.createWorker(options);
 - **Better macOS font support** — improved discovery and rendering of system fonts on macOS for more faithful document conversion.
 - **PDF metadata configuration** — new `pdfCreator` and `pdfProducer` options on `WordSDK.Options` let you customize the `Creator` and `Producer` fields written into the exported PDF's metadata.
 
+## What's new in 1.0.9
+- **Improved Microsoft Word table rendering** — fixes for several table layout and rendering issues.
+
 
 ## <a id="incompatible_change"></a>Incompatible change: 1.0.4 → 1.0.5
 
@@ -146,15 +149,45 @@ we split the SDK into proper Java modules. This required moving two classes into
 
 **Action required:** update the imports in your code before upgrading. No other API changes were made.
 
+## <a id="incompatible_change_1_0_9"></a>Incompatible change: 1.0.5 → 1.0.9
+
+**WordSDK is no longer published to Maven Central.** Starting with 1.0.9, artifacts are hosted at `https://downloads.wordsdk.com`, so you need to add this repository to your `pom.xml`:
+
+```xml
+<repositories>
+  <repository>
+    <id>wordsdk</id>
+    <url>https://downloads.wordsdk.com</url>
+  </repository>
+</repositories>
+```
+
+Maven Central has introduced [publishing limits](https://central.sonatype.org/publish/maven-central-publishing-limits/), and WordSDK is ~82 MB in total, mostly due to the open font collection bundled in the `wordsdk` module. We are still working on bringing WordSDK back to Maven Central.
+
+If Maven still reports `Could not find artifact com.wordsdk:...` after adding the repository, a failed lookup is cached in your local `~/.m2` repository. Force Maven to re-check with `-U`:
+
+```bash
++mvn -U package
+```
 
 ## Prerequisites
 
-Reference WordSDK in your `pom.xml`:
+Since 1.0.9, WordSDK is hosted at `https://downloads.wordsdk.com` instead of Maven Central (see [Incompatible change: 1.0.5 → 1.0.9](#incompatible_change_1_0_9)). Add the repository to your `pom.xml`:
+```xml
+<repositories>
+  <repository>
+    <id>wordsdk</id>
+    <url>https://downloads.wordsdk.com</url>
+  </repository>
+</repositories>
+```
+
+Then reference WordSDK:
 ```xml
 <dependency>
   <groupId>com.wordsdk</groupId>
   <artifactId>wordsdk</artifactId>
-  <version>1.0.5</version>
+  <version>1.0.9</version>
 </dependency>
 ```
 and for the Wasmtime backend
@@ -162,13 +195,13 @@ and for the Wasmtime backend
 <dependency>
   <groupId>com.wordsdk</groupId>
   <artifactId>wasmtime</artifactId>
-  <version>1.0.5</version>
+  <version>1.0.9</version>
 </dependency>
-or for the Chircory backend
+or for the Chicory backend
 <dependency>
    <groupId>com.wordsdk</groupId>
    <artifactId>chicory</artifactId>
-   <version>1.0.5</version>
+   <version>1.0.9</version>
 </dependency>
 ```
 
